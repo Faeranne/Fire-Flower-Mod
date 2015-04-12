@@ -2,10 +2,12 @@ package com.mrmakeit.fireflower;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.DamageSource;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -39,17 +41,19 @@ public class EntityFlowerFireball extends EntityThrowable {
         }else{
         	if(this.bounceCount<2){
 	        	this.bounceCount++;
-	        	if(movingobjectposition.sideHit==0||movingobjectposition.sideHit==1){
+	        	if(movingobjectposition.sideHit==EnumFacing.DOWN||movingobjectposition.sideHit==EnumFacing.UP){
 	        		this.motionY = -this.motionY;
-	        	}else if(movingobjectposition.sideHit==2||movingobjectposition.sideHit==3){
+	        	}else if(movingobjectposition.sideHit==EnumFacing.NORTH||movingobjectposition.sideHit==EnumFacing.SOUTH){
 	        		this.motionZ = -this.motionZ;
-	        	}else if(movingobjectposition.sideHit==4||movingobjectposition.sideHit==5){
+	        	}else if(movingobjectposition.sideHit==EnumFacing.EAST||movingobjectposition.sideHit==EnumFacing.WEST){
 	        		this.motionX = -this.motionX;
 	        	}
         	}else{
-        		Block hitBlock = myWorld.getBlock(movingobjectposition.blockX,movingobjectposition.blockY+1,movingobjectposition.blockZ);
+        		Block hitBlock = myWorld.getBlockState(new BlockPos(movingobjectposition.getBlockPos().getX(),movingobjectposition.getBlockPos().getY()+1,movingobjectposition.getBlockPos().getZ())).getBlock();
+        		
         		if(hitBlock==null||hitBlock.getMaterial() == Material.air){
-        			myWorld.setBlock(movingobjectposition.blockX,movingobjectposition.blockY+1,movingobjectposition.blockZ,Blocks.fire);
+        			IBlockState fire = Blocks.fire.getDefaultState();
+        			myWorld.setBlockState(new BlockPos(movingobjectposition.getBlockPos().getX(),movingobjectposition.getBlockPos().getY()+1,movingobjectposition.getBlockPos().getZ()),fire);
         		}
         		this.setDead();
         	}

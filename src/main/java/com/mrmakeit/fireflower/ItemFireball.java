@@ -6,17 +6,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+
 
 public class ItemFireball extends Item
 {
+	private final String name = "fireball";
 	public ItemFireball()
 	{
 		super();
 		setMaxStackSize(1);
-		this.setUnlocalizedName(FireFlower.MODID + ":" + "fireball"); //Sets the name of this item, Has to be unique!
+		this.setUnlocalizedName(FireFlower.MODID + ":" + this.name); //Sets the name of this item, Has to be unique!
 		this.setCreativeTab(CreativeTabs.tabCombat); //This Item will be in the Combat Creative Tab!
-		this.setTextureName(FireFlower.MODID + ":" + "fireball"); //The texture for this item is the Grenade!
 		this.setMaxDamage(200);
+		GameRegistry.registerItem(this, this.name);
 	}
 	@Override
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
@@ -48,5 +51,10 @@ public class ItemFireball extends Item
 			}
 		}
 
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 }

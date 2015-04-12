@@ -2,17 +2,21 @@ package com.mrmakeit.fireflower;
 
 import com.mrmakeit.fireflower.proxy.CommonProxy;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.Mod;                                       
+import net.minecraftforge.fml.common.Mod.EventHandler;                          
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = FireFlower.MODID, version = FireFlower.VERSION)
 public class FireFlower
@@ -36,8 +40,6 @@ public class FireFlower
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-    	GameRegistry.registerItem(fireFlower, "Fire Flower");
-    	GameRegistry.registerItem(fireball, "Fire Flower Fireball");
     	EntityRegistry.registerModEntity(EntityFlowerFireball.class,"itemFireball",4,this,80,3,true);
         proxy.registerRenderers();
         ItemStack redflower = new ItemStack(Blocks.red_flower);
@@ -45,6 +47,12 @@ public class FireFlower
         ItemStack firecharge = new ItemStack(Items.fire_charge);
         GameRegistry.addShapelessRecipe(new ItemStack(fireFlower), redflower,firecharge);
         GameRegistry.addShapelessRecipe(new ItemStack(fireFlower), yellowflower,firecharge);
+        if(event.getSide() == Side.CLIENT)
+        {
+        	RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+        	renderItem.getItemModelMesher().register(fireball, 0, new ModelResourceLocation(FireFlower.MODID + ":" + ((ItemFireball) fireball).getName(), "inventory"));
+        	renderItem.getItemModelMesher().register(fireFlower, 0, new ModelResourceLocation(FireFlower.MODID + ":" + ((ItemFireFlower) fireFlower).getName(), "inventory"));
+        }
     }
 
 
