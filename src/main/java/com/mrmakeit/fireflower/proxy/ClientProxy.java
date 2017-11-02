@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.entity.RenderSnowball;
 import com.mrmakeit.fireflower.EntityFlowerFireball;
 import com.mrmakeit.fireflower.FireFlower;
 
-import cpw.mods.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy{
 

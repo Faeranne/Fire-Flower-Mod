@@ -6,13 +6,13 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = FireFlower.MODID, version = FireFlower.VERSION)
 public class FireFlower
@@ -36,13 +36,13 @@ public class FireFlower
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-    	GameRegistry.registerItem(fireFlower, "Fire Flower");
-    	GameRegistry.registerItem(fireball, "Fire Flower Fireball");
+    	GameRegistry.register(fireFlower);
+    	GameRegistry.register(fireball);
     	EntityRegistry.registerModEntity(EntityFlowerFireball.class,"itemFireball",4,this,80,3,true);
         proxy.registerRenderers();
-        ItemStack redflower = new ItemStack(Blocks.red_flower);
-        ItemStack yellowflower = new ItemStack(Blocks.yellow_flower);
-        ItemStack firecharge = new ItemStack(Items.fire_charge);
+        ItemStack redflower = new ItemStack(Blocks.RED_FLOWER);
+        ItemStack yellowflower = new ItemStack(Blocks.YELLOW_FLOWER);
+        ItemStack firecharge = new ItemStack(Items.FIRE_CHARGE);
         GameRegistry.addShapelessRecipe(new ItemStack(fireFlower), redflower,firecharge);
         GameRegistry.addShapelessRecipe(new ItemStack(fireFlower), yellowflower,firecharge);
     }
